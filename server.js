@@ -9,6 +9,21 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const PROD_URL = process.env.PROD_URL;
+
+const whitelist = ['http://localhost:3000', PROD_URL ]
+
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1){
+            callback(null, true)}
+            else {
+                callback(new Error('Not allowed by CORS'))
+            }
+        }
+    }
+
 
 app.use(cors({origin: 'http://localhost:5173'}));
 
